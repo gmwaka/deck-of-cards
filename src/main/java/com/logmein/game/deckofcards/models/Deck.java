@@ -27,7 +27,6 @@ public class Deck{
     private String name;
 
     @OneToMany
-    @Column(name="PLAYERS")    
-    private List<Player> players;
-
+    @Column(name = "CARDS")
+    private List<Card> cards;
 }
