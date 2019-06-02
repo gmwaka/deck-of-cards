@@ -1,5 +1,6 @@
 package com.logmein.game.deckofcards.models;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,4 +29,16 @@ public class Player {
     @OneToMany
     @Column(name = "CARDS")
     private List<Card> cards;
+
+    private Integer totalCard;
+
+    public int totalCardsValue(){
+        int totalValue = 0;
+        Iterator<Card> cardsIterator = this.getCards().iterator();
+        while (cardsIterator.hasNext()) {
+            Card card = cardsIterator.next();
+            totalValue = totalValue + card.getCardNumber();
+        }
+        return totalValue;
+    }
 }

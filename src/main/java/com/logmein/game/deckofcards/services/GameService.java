@@ -1,6 +1,8 @@
 package com.logmein.game.deckofcards.services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import com.logmein.game.deckofcards.models.Card;
@@ -83,7 +85,7 @@ public class GameService {
             List<Player> gamePlayers = game.getPlayers();
             if(gamePlayers.contains(player)){
                 List<Card> gameDeck = game.getGame_deck();
-                for (int i = gameDeck.size() - 1; i > 0 && numer_of_cards >0; i--){
+                for (int i = gameDeck.size() - 1; i >= 0 && numer_of_cards >0; i--){
                     Card cardToDeal = gameDeck.get(gameDeck.size()-1);
                     List<Card> playerCards = player.getCards();
 
@@ -109,5 +111,24 @@ public class GameService {
         }
         final Game theGame = gameRepository.save(gameToUpdate);
         return theGame;
+    }
+
+    public List<Player> listPlayers(Long gameId){
+        List<Player> players = new ArrayList<Player>();
+        Game game = gameRepository.findById(gameId).orElse(null);
+
+        List<Player> playerResult = new ArrayList<Player>();
+        if(game != null){
+            players = game.getPlayers();
+            Iterator<Player> playerIterator = players.iterator();
+            while (playerIterator.hasNext()) {
+                Player player = playerIterator.next();
+                player.setTotalCard(player.totalCardsValue());
+                playerResult.add(player);                
+            }
+            
+            playerResult.sort(Comparator.comparing(Player::totalCardsValue).reversed());
+        }
+        return playerResult;
     }
 }

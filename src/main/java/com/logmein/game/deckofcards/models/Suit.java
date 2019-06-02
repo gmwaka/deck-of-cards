@@ -23,7 +23,7 @@ public class Suit {
         this.suitCards.add(new Card(1, "Ace", suitName));
         IntStream.range(2, 11).forEach(value -> this.suitCards.add(new Card(value, String.valueOf(value), suitName)));
         this.suitCards.add(new Card(11, "Jack", suitName));
-        this.suitCards.add(new Card(11, "Queen", suitName));
-        this.suitCards.add(new Card(11, "King", suitName));
+        this.suitCards.add(new Card(12, "Queen", suitName));
+        this.suitCards.add(new Card(13, "King", suitName));
     }
 }

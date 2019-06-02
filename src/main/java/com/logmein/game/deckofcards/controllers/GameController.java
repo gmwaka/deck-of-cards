@@ -1,14 +1,17 @@
 package com.logmein.game.deckofcards.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.logmein.game.deckofcards.models.Game;
+import com.logmein.game.deckofcards.models.Player;
 import com.logmein.game.deckofcards.services.GameService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,5 +70,10 @@ public class GameController {
     @GetMapping("game/{game_id}")
     public ResponseEntity<Game> shouffleGameDeck(@PathVariable(value = "game_id") Long game_id){
         return ResponseEntity.ok(gameService.shuffleGameDeck(game_id));
+    }
+    
+    @GetMapping("game/{game_id}/players")
+    public ResponseEntity<List<Player>> ListOfPlayerCards(@PathVariable(value = "game_id") Long game_id){
+        return new ResponseEntity<List<Player>>(gameService.listPlayers(game_id), HttpStatus.OK);
     }
 }
