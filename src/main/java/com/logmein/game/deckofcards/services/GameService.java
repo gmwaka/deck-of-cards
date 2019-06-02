@@ -76,16 +76,32 @@ public class GameService {
         return theGame;
     }
 
-    // public Player dealCards(int numer_of_cards, Long playerId, Long gameId){
-    //     Game game = gameRepository.findById(gameId).orElse(null);
-    //     Player player = playerRepository.findById(playerId).orElse(null);
-    //     if(game != null && player != null){
-    //         List<Player> gamePlayers = game.getPlayers();
-    //         if(gamePlayers.contains(player)){
-    //             game.getDecks();
-    //         }
-    //     }
-    // }
+    public Player dealCards(int numer_of_cards, Long playerId, Long gameId){
+        Game game = gameRepository.findById(gameId).orElse(null);
+        Player player = playerRepository.findById(playerId).orElse(null);
+        if(game != null && player != null){
+            List<Player> gamePlayers = game.getPlayers();
+            if(gamePlayers.contains(player)){
+                List<Card> gameDeck = game.getGame_deck();
+                for (int i = gameDeck.size() - 1; i > 0 && numer_of_cards >0; i--){
+                    Card cardToDeal = gameDeck.get(gameDeck.size()-1);
+                    List<Card> playerCards = player.getCards();
+
+                    playerCards.add(cardToDeal);
+                    player.setCards(playerCards);
+                    playerRepository.save(player);
+
+                    gameDeck.remove(cardToDeal);
+                    numer_of_cards--;
+                }
+                game.setGame_deck(gameDeck);
+            }
+        }
+        gameRepository.save(game);
+        final Player thePlayer = playerRepository.save(player);
+        return thePlayer;
+    }
+
     public Game shuffleGameDeck(Long gameId){
         Game gameToUpdate = gameRepository.findById(gameId).orElse(null);
         if(gameToUpdate != null){
