@@ -11,6 +11,7 @@ import com.logmein.game.deckofcards.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,5 +56,16 @@ public class GameController {
     public ResponseEntity<Game> updateGamePlayer(@PathVariable(value = "game_id") Long game_id, @RequestBody Map<String, String> body){
         Long player_id = Long.parseLong(body.get("player_id"));
         return ResponseEntity.ok(gameService.addPlayer(game_id, player_id));
+    }
+
+    @PutMapping(value="game/{game_id}/player/{player_id}")
+    public ResponseEntity<?> dealCards(@PathVariable Long game_id, @PathVariable Long player_id, @RequestBody Map<String, String> body) {
+        int numberOfCard = Integer.parseInt(body.get("number_of_card_to_deal"));
+        return ResponseEntity.ok(gameService.dealCards(numberOfCard, player_id, game_id));
+    }
+
+    @GetMapping("game/{game_id}")
+    public ResponseEntity<Game> shouffleGameDeck(@PathVariable(value = "game_id") Long game_id){
+        return ResponseEntity.ok(gameService.shuffleGameDeck(game_id));
     }
 }

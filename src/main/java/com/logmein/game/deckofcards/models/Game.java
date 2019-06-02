@@ -1,6 +1,7 @@
 package com.logmein.game.deckofcards.models;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,18 @@ public class Game {
     private List<Player> players;
 
     @OneToMany
-    @Column(name="DECKS")    
-    private List<Deck> decks;
+    @Column(name="GAME_DECK")    
+    private List<Card> game_deck;
+
+    public void shuffleGameDeck(){
+        Random random = new Random();
+        List<Card> temporary_game_deck = this.getGame_deck();
+        for (int i = temporary_game_deck.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            Card temporaryCard = temporary_game_deck.get(j);
+            temporary_game_deck.set(j, temporary_game_deck.get(i));
+            temporary_game_deck.set(i, temporaryCard);
+        }
+        this.setGame_deck(temporary_game_deck);
+    }
 }
