@@ -4,6 +4,7 @@
 
 POST ("/game")
 
+
 E.g.
 
 POST /game
@@ -22,6 +23,7 @@ Content-Type: application/json
 
 DELETE ("game/{game_id}")
 
+
 E.g.
 
 DELETE game/1
@@ -29,8 +31,48 @@ DELETE game/1
 Content-Type: application/json
 
 
+------------------------------------
+
+- Create a player
+
+POST ("/player")
+
+
+E.g.
+
+POST /player
+
+Content-Type: application/json
+
+{
+
+    "name": "Player of year"
+
+}
+
 
 ------------------------------------
+
+- Create a deck
+
+POST ("/player")
+
+
+E.g.
+
+POST /deck
+
+Content-Type: application/json
+
+{
+
+    "name": "My First Deck"
+
+}
+
+
+------------------------------------
+
 
 - Add a deck to the game
 
@@ -54,6 +96,7 @@ Content-Type: application/json
 - Add a player to the game
 
 PUT ("game/{game_id}/player")
+
 
 E.g.
 
@@ -79,6 +122,8 @@ Content-Type: application/json
 PUT ("game/{game_id}/player/{player_id}")
 
 
+E.g.
+
 PUT game/1/player/1
 
 Content-Type: application/json
@@ -96,6 +141,7 @@ Content-Type: application/json
 
 GET ("/player/{player_id}/cards")
 
+
 E.g
 
 GET /player/55/cards
@@ -110,6 +156,7 @@ Content-Type: application/json
 - Get the list of players in a game along with the total added value of all the cards each player holds
 
 GET ("game/{game_id}/players")
+
 
 E.g
 
@@ -130,3 +177,10 @@ Content-Type: application/json
 - Shuffle a game deck
 
 GET ("game/{game_id}")
+
+
+E.g.
+
+GET game/1
+
+Content-Type: application/json
