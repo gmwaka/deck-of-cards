@@ -25,7 +25,7 @@ public class Deck{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="DECK_NAME", nullable=false) 
+    @Column(name="DECK_NAME", nullable=false, unique = true) 
     private String name;
 
     @OneToMany

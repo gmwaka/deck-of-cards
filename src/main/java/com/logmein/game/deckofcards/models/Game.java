@@ -22,7 +22,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="NAME", nullable=false)
+    @Column(name="NAME", nullable=false, unique = true)
     private String name;
 
     @OneToMany

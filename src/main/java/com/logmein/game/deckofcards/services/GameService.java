@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.logmein.game.deckofcards.models.Deck;
 import com.logmein.game.deckofcards.models.Game;
+import com.logmein.game.deckofcards.models.Player;
 import com.logmein.game.deckofcards.repositories.DeckRepository;
 import com.logmein.game.deckofcards.repositories.GameRepository;
+import com.logmein.game.deckofcards.repositories.PlayerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class GameService {
 
     @Autowired
     private DeckRepository deckRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
 
     public Game saveGame(Game game){
         return gameRepository.save(game);
@@ -38,6 +43,30 @@ public class GameService {
             List<Deck> gameDecks = gameToUpdate.getDecks();
             gameDecks.add(deckToInclude);
             gameToUpdate.setDecks(gameDecks);
+        }
+        final Game theGame = gameRepository.save(gameToUpdate);
+        return theGame;
+    }
+
+    public Game addPlayer(Long gameId, Long playerId){
+        Game gameToUpdate = gameRepository.findById(gameId).orElse(null);
+        Player playerToInclude = playerRepository.findById(playerId).orElse(null);
+        if(gameToUpdate != null && playerToInclude != null){
+            List<Player> gamePlayers = gameToUpdate.getPlayers();
+            gamePlayers.add(playerToInclude);
+            gameToUpdate.setPlayers(gamePlayers);
+        }
+        final Game theGame = gameRepository.save(gameToUpdate);
+        return theGame;
+    }
+
+    public Game removePlayer(Long gameId, Long playerId){
+        Game gameToUpdate = gameRepository.findById(gameId).orElse(null);
+        Player playerToRemove = playerRepository.findById(playerId).orElse(null);
+        if(gameToUpdate != null && playerToRemove != null){
+            List<Player> gamePlayers = gameToUpdate.getPlayers();
+            gamePlayers.remove(playerToRemove);
+            gameToUpdate.setPlayers(gamePlayers);
         }
         final Game theGame = gameRepository.save(gameToUpdate);
         return theGame;
