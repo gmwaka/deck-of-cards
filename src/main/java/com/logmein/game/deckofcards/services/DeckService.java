@@ -1,32 +1,31 @@
 
 package com.logmein.game.deckofcards.services;
 
-//import com.logmein.game.deckofcards.dtos.DeckDTO;
-//import com.logmein.game.deckofcards.models.Deck;
-//import com.logmein.game.deckofcards.repositories.DeckRepository;
+import java.util.Iterator;
 
+import com.logmein.game.deckofcards.models.Card;
+import com.logmein.game.deckofcards.models.Deck;
+import com.logmein.game.deckofcards.repositories.CardRepository;
+import com.logmein.game.deckofcards.repositories.DeckRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class DeckService{
 
-    // private final DeckRepository deckRepository;
+    @Autowired
+    private DeckRepository deckRepository;
 
-    /*
-    public void createDeck(DeckDTO deckDTO){
-        Deck deckModel = mapFromDeckDTOToDeck(deckDTO);
-        deckRepository.save(deckModel);
-    }
+    @Autowired
+    private CardRepository cardRepository;
 
-    private Deck mapFromDeckDTOToDeck(DeckDTO deckDTO){
-        Deck deckModel = new Deck();
-        deckModel.setName(deckDTO.getName());
-        //deckModel.setPlayers(deck);
-        return deckModel;
+    public Deck saveDeck(Deck deck){
+        for(Iterator<Card> iterator = deck.getCards().iterator(); iterator.hasNext();){
+            Card card = iterator.next();
+            cardRepository.save(card);
+        }
+        return deckRepository.save(deck);
     }
-    */
 
 }

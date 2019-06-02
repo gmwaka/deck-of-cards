@@ -19,10 +19,22 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "SUIT_VALUE", nullable=false)
-    private String suitValue;
+    @Column(name = "CARD_NUMBER", nullable=false)
+    private Integer cardNumber;
+    
+    @Column(name = "CARD_SUIT", nullable=false)
+    private String cardSuit;
 
-    @Column(name = "FACE_VALUE", nullable = false)
-    private String faceValue;
+    @Column(name = "CARD_NAME", nullable = false)
+    private String cardName;
 
+    public Card() {
+	}
+	
+	public Card(int cardNumber, String cardName, String cardSuit) {
+		super();
+		this.cardNumber = cardNumber;
+		this.cardName = cardName;
+		this.cardSuit = cardSuit;
+	}
 }

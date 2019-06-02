@@ -26,15 +26,6 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    // private final DeckService deckService;
-
-    /*
-    @PostMapping(value="/")
-    public ResponseEntity postMethodName(@Valid @RequestBody DeckDTO deckDTO) {
-        deckService.createDeck(deckDTO);
-        return ResponseEntity.ok().body("Worked!");
-    }
-    */
     @PostMapping("/game")
     public ResponseEntity<Game> createGame(@Valid @RequestBody Game game){
         return ResponseEntity.ok(gameService.saveGame(game));
@@ -45,16 +36,13 @@ public class GameController {
         Map<String, String> response = new HashMap<String, String>();
         if(gameService.deleteGame(id)){
             response.put("status", "succes");
-            response.put("message", "game deleted successfully!");
+            response.put("message", "Game deleted successfully!");
             return ResponseEntity.ok(response);
         }else{
             response.put("status", "error");
-            response.put("message", "something went wrong when delete the game!");
+            response.put("message", "Something went wrong when delete the game!");
             return ResponseEntity.status(500).body(response);
         }
     }
-
-
-    
 
 }
