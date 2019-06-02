@@ -12,8 +12,10 @@ import com.logmein.game.deckofcards.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,10 +33,10 @@ public class GameController {
         return ResponseEntity.ok(gameService.saveGame(game));
     }
 
-    @DeleteMapping("game/{id}")
-    public ResponseEntity<?> deleteGame(@PathVariable Long id){
+    @DeleteMapping("game/{game_id}")
+    public ResponseEntity<?> deleteGame(@PathVariable Long game_id){
         Map<String, String> response = new HashMap<String, String>();
-        if(gameService.deleteGame(id)){
+        if(gameService.deleteGame(game_id)){
             response.put("status", "succes");
             response.put("message", "Game deleted successfully!");
             return ResponseEntity.ok(response);
@@ -45,4 +47,9 @@ public class GameController {
         }
     }
 
+    @PatchMapping("game/{game_id}")
+    public ResponseEntity<Game> updateGame(@PathVariable(value = "game_id") Long game_id, @RequestBody Map<String, String> body){
+        Long deck_id = Long.parseLong(body.get("deck_id"));
+        return ResponseEntity.ok(gameService.addDeck(game_id, deck_id));
+    }
 }
